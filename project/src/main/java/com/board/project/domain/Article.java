@@ -1,6 +1,5 @@
 package com.board.project.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,7 +10,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -41,6 +42,17 @@ public class Article {
     // 옵션
     @Setter
     private String hashtag; // 해시태그
+
+    @ToString.Exclude // 무한 순환참조 문제가 발생할 수 있음. ArticleComment 안에 Article이 존재하므로 -> 순환 참조 문제를 끊어주는 목적
+    @OrderBy("id")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
+    // article에 연동되어있는 comment는 중복을 허용하지 않고 다 모아서 collection으로 보겠다
+    // article 테이블로부터 온 것이다라는 것을 명시해줌
+    // 실무에서는 양방향을 풀어주는(걸어주지 않는) 경우가 많음 -> ex. 글은 지워도 댓글은 남기는 경우 존재
+
+
+
 
     // JPA Auditing
     @CreatedDate // Entity가 생성되어 저장될 때 시간이 자동 저장
