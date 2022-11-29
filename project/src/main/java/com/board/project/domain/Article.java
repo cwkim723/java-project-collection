@@ -23,9 +23,9 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class Article extends AuditingFields {
     // @Transient 언급이 없는 이상 @Column 적용된 것으로 인식 (nullable = true)
 
     @Id
@@ -57,21 +57,36 @@ public class Article {
 
 
     // JPA Auditing
-    @CreatedDate // Entity가 생성되어 저장될 때 시간이 자동 저장
-    @Column(nullable = false)
-    private LocalDateTime createdAt; // 생성일시
+//    @CreatedDate // Entity가 생성되어 저장될 때 시간이 자동 저장
+//    @Column(nullable = false)
+//    private LocalDateTime createdAt; // 생성일시
+//
+//    @CreatedBy
+//    @Column(nullable = false, length = 100)
+//    private String createdBy; // 생성자
+//
+//    @LastModifiedDate // 조회한 Entity의 값을 변경할 때 시간이 자동 저장
+//    @Column(nullable = false)
+//    private LocalDateTime modifiedAt; // 수정일시
+//
+//    @LastModifiedBy
+//    @Column(nullable = false, length = 100)
+//    private String modifiedBy; // 수정자
 
-    @CreatedBy
-    @Column(nullable = false, length = 100)
-    private String createdBy; // 생성자
+    /*
+    * 위 4가지 JPA Auditing 생성 방법
+    * 방법1. entity마다 생성하기(중복이 많아진다는 단점 존재)
+    *   장점: 데이터베이스마다 유연하게 관리 가능 (ex. article에서는 4개 다 사용, articlecomment에서는 create 관련 데이터만 사용 등등)
+    * 방법2-1. @Embedded -> 필드 추가 방법
+      @Embedded Metadata metadata;
+      class Metadata() {}
+    * 방법2-2. @MappedSuperclass -> 상속 방법
+      AuditingFields 클래스 생성 후 상속
+    * */
 
-    @LastModifiedDate // 조회한 Entity의 값을 변경할 때 시간이 자동 저장
-    @Column(nullable = false)
-    private LocalDateTime modifiedAt; // 수정일시
 
-    @LastModifiedBy
-    @Column(nullable = false, length = 100)
-    private String modifiedBy; // 수정자
+
+
 
     // Entity로서의 기본 기능 추가
     // Hibernate 구현체 기준으로 기본 생성자가 필요 (외부에서는 사용하지 못하도록 해야 하므로 protected 사용)

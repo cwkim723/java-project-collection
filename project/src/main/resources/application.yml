@@ -13,6 +13,9 @@ spring:
     username: admin
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    driver-class-name: org.h2.Driver
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
@@ -22,22 +25,23 @@ spring:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
   sql.init.mode: always
-  h2:
-    console:
-      enabled: false
+#  h2:
+#    console:
+#      enabled: false
+
+#---
+#
+#spring:
+#  config.activate.on-profile: testdb
+#  datasource:
+#    url: jdbc:h2:mem:board;mode=mysql
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  sql.init.mode: always
+#  test.database.replace: none
+#  # 모든 테스트는 이 데이터베이스를 이용하겠다
 
 ---
 
-#spring:
-#  config.activate.on-profile: heroku
-#  datasource:
-#    url: ${JAWSDB_URL}
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#  jpa.hibernate.ddl-auto: create
-#  sql.init.mode: always
-#
-#---
-#
 #spring:
 #  config.activate.on-profile: test
 #  datasource.url: jdbc:h2:mem:testdb
