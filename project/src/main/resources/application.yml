@@ -26,18 +26,19 @@ spring:
     console:
       enabled: false
 
----
-
-#spring:
-#  config.activate.on-profile: heroku
-#  datasource:
-#    url: ${JAWSDB_URL}
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#  jpa.hibernate.ddl-auto: create
-#  sql.init.mode: always
-#
 #---
 #
+#spring:
+#  config.activate.on-profile: testdb
+#  datasource:
+#    url: jdbc:h2:mem:board;mode=mysql
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  sql.init.mode: always
+#  test.database.replace: none
+#  # 모든 테스트는 이 데이터베이스를 이용하겠다
+
+---
+
 #spring:
 #  config.activate.on-profile: test
 #  datasource.url: jdbc:h2:mem:testdb
