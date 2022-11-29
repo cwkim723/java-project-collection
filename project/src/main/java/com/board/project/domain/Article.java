@@ -27,6 +27,7 @@ import java.util.Set;
 @Entity
 public class Article extends AuditingFields {
     // @Transient 언급이 없는 이상 @Column 적용된 것으로 인식 (nullable = true)
+    // http://localhost:8080/api에 들어가면 hal explorer 페이지가 뜸
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // JPA의 autoincrement는 IDENTITY 방식
